@@ -78,5 +78,11 @@ public class LivreController {
             livreService.deleteLivreById(livreId);
         }
 
+        @GetMapping(path= "/getlivres/{livreId}")
+        public Livre getLivreById(@PathVariable("livreId") Long livreId) {
+
+            return livreService.getLivreById(livreId);
+        }
+
 
     }
