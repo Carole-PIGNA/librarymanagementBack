@@ -1,12 +1,14 @@
 package com.example.librarymanagement.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data  // pour les getters et les setters
 @AllArgsConstructor// constructeur avec tous les attributs
@@ -30,6 +32,11 @@ public class Livre {
     @Enumerated(EnumType.STRING) // Spécifie que l'énum doit être stocké en tant que chaîne
     private Genre genre;
     private String imagePath;
+
+    //un livre peut être emprunté plusieurs fois
+    @OneToMany(mappedBy = "livre", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Emprunt> emprunts;
 
     //constructeur sans id
     public Livre (String title, String author, Date pub_date, Genre genre, String imagePath){
