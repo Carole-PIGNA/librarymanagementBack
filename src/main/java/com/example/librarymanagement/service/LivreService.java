@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LivreService {
@@ -18,8 +19,8 @@ public class LivreService {
         return livreRepository.findAll();
     }
 
-    public void addNewLivre(Livre livre) {
-        livreRepository.save(livre);
+    public Livre addNewLivre(Livre livre) {
+        return livreRepository.save(livre);
     }
     public void deleteLivreById(Long livreId) {
 
@@ -30,4 +31,13 @@ public class LivreService {
 
         livreRepository.deleteById(livreId);
     }
+    public Livre getLivreById(Long livreId) {
+        Optional<Livre> livre = livreRepository.findById(livreId);
+        if (livre.isEmpty()) {
+            throw new IllegalArgumentException("Le livre avec l'ID " + livreId + " n'existe pas.");
+        }
+        return livre.get();
+    }
+
+
 }
