@@ -1,7 +1,9 @@
 package com.example.librarymanagement.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor  // constructeur sans attributs
 @Entity(name = "livre")//si je ne déclare pas comme entity je n'aurai pas de persistance de donnée
 // j'ai rajouté le name aussi pour Hibernate
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Livre {
 
 
@@ -35,7 +38,7 @@ public class Livre {
 
     //un livre peut être emprunté plusieurs fois
     @OneToMany(mappedBy = "livre", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+
     private List<Emprunt> emprunts;
 
     //constructeur sans id
